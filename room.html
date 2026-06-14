@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
 
 <meta charset="UTF-8">
@@ -23,12 +23,12 @@
     background:#13294d;
     padding:20px;
     border-radius:20px;
+    color:white;
 }
 
 .video-grid{
     display:grid;
-    grid-template-columns:
-    repeat(auto-fit,minmax(300px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
     gap:15px;
 }
 
@@ -42,6 +42,7 @@ video{
     background:#13294d;
     padding:20px;
     border-radius:20px;
+    color:white;
 }
 
 .participant{
@@ -66,6 +67,7 @@ video{
     background:#081224;
     border-radius:10px;
     padding:10px;
+    margin-bottom:10px;
 }
 
 textarea{
@@ -74,33 +76,21 @@ textarea{
 }
 
 .notification{
-
     position:fixed;
-
     top:20px;
     right:20px;
-
     background:#00ff88;
-
     color:black;
-
     padding:15px;
-
     border-radius:10px;
-
     display:none;
-
     font-weight:bold;
 }
 
 .timer{
-
     text-align:center;
-
     font-size:2rem;
-
     margin-top:15px;
-
     color:#00e5ff;
 }
 
@@ -119,42 +109,29 @@ textarea{
 <h2>NRI Virtual Study Room</h2>
 
 <p>
-Room:
+Room :
 <span id="roomDisplay"></span>
 </p>
 
 <div class="video-grid">
 
-<div>
-
 <video
 id="myVideo"
 autoplay
 muted
-playsinline>
-</video>
-
-</div>
+playsinline> </video>
 
 </div>
 
 <div class="controls">
 
-<button onclick="toggleMic()">
-🎤 Mic
-</button>
+<button onclick="toggleMic()">🎤 Mic</button>
 
-<button onclick="toggleCamera()">
-📷 Camera
-</button>
+<button onclick="toggleCamera()">📷 Camera</button>
 
-<button onclick="shareScreen()">
-🖥 Share Screen
-</button>
+<button onclick="shareScreen()">🖥 Share Screen</button>
 
-<button onclick="leaveRoom()">
-🚪 Leave Room
-</button>
+<button onclick="leaveRoom()">🚪 Leave Room</button>
 
 </div>
 
@@ -176,15 +153,12 @@ playsinline>
 
 <h3>Chat</h3>
 
-<div
-class="chat-box"
-id="chatBox">
-</div>
+<div class="chat-box" id="chatBox"></div>
 
 <input
 type="text"
 id="message"
-placeholder="Type message">
+placeholder="Type Message">
 
 <button onclick="sendMessage()">
 Send
@@ -194,37 +168,43 @@ Send
 
 <h3>Shared Notes</h3>
 
-<textarea
-placeholder="Write notes here...">
-</textarea>
+<textarea rows="6"
+placeholder="Write notes here..."></textarea>
 
 <hr>
 
 <h3>Pomodoro Timer</h3>
 
-<div
-class="timer"
-id="timer">
-
+<div class="timer" id="timer">
 25:00
-
 </div>
 
 <button onclick="startTimer()">
-Start
+Start Timer
 </button>
 
 </div>
 
 </div>
 
+<script src="/socket.io/socket.io.js"></script>
+
 <script>
+
+const socket = io();
+
+const roomId =
+localStorage.getItem("roomId") ||
+"Study Room";
 
 document.getElementById(
 "roomDisplay"
-).innerText =
-localStorage.getItem("roomId") ||
-"Study Room";
+).innerText = roomId;
+
+socket.emit(
+"join-room",
+roomId
+);
 
 let stream;
 
@@ -248,7 +228,7 @@ document.getElementById(
 catch(err){
 
 alert(
-"Allow Camera and Microphone"
+"Allow Camera and Microphone Access"
 );
 
 }
@@ -345,29 +325,37 @@ document.getElementById(
 "notification"
 );
 
-box.innerText =
-text;
+box.innerText = text;
 
-box.style.display =
-"block";
+box.style.display = "block";
 
 setTimeout(()=>{
 
-box.style.display =
-"none";
+box.style.display = "none";
 
 },3000);
 
 }
 
+socket.on(
+"message",
+(msg)=>{
+showNotification(msg);
+}
+);
+
 showNotification(
 "Welcome to the Study Room"
 );
 
-let seconds =
-1500;
+let seconds = 1500;
+let timerRunning = false;
 
 function startTimer(){
+
+if(timerRunning) return;
+
+timerRunning = true;
 
 setInterval(()=>{
 
@@ -384,13 +372,11 @@ seconds%60;
 document.getElementById(
 "timer"
 ).innerText =
-String(mins)
-.padStart(2,"0")
+String(mins).padStart(2,"0")
 +
 ":"
 +
-String(secs)
-.padStart(2,"0");
+String(secs).padStart(2,"0");
 
 }
 

@@ -71,39 +71,24 @@ button{
 
 function joinRoom(){
 
-    const enteredRoomId =
+    const roomId =
     document.getElementById("roomId").value;
 
-    const enteredPassword =
+    const roomPassword =
     document.getElementById("roomPassword").value;
 
-    const savedRoomId =
-    localStorage.getItem("roomId");
-
-    const savedPassword =
-    localStorage.getItem("roomPassword");
-
-    if(
-        enteredRoomId === savedRoomId &&
-        enteredPassword === savedPassword
-    ){
-
-        alert("Joining Room...");
-
-        window.location.href =
-        "room.html";
-
+    if(roomId === "" || roomPassword === ""){
+        alert("Please enter Room ID and Password");
+        return;
     }
-    else{
 
-        alert(
-            "Invalid Room ID or Password"
-        );
+    localStorage.setItem("roomId", roomId);
 
-    }
+    alert("Joining Room...");
+
+    window.location.href = "room.html";
 }
 
 </script>
-
 </body>
 </html>
