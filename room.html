@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NRI Virtual Study Room</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.room-container{
+    display:grid;
+    grid-template-columns:3fr 1fr;
+    gap:20px;
+    padding:20px;
+}
+
+.video-section{
+    background:#13294d;
+    padding:20px;
+    border-radius:20px;
+}
+
+.video-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+    gap:15px;
+}
+
+video{
+    width:100%;
+    border-radius:15px;
+    background:black;
+}
+
+.side-panel{
+    background:#13294d;
+    padding:20px;
+    border-radius:20px;
+}
+
+.participant{
+    padding:8px;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.controls button{
+    padding:12px 18px;
+}
+
+.chat-box{
+    height:200px;
+    overflow-y:auto;
+    background:#081224;
+    border-radius:10px;
+    padding:10px;
+}
+
+textarea{
+    width:100%;
+    margin-top:10px;
+}
+
+.notification{
+
+    position:fixed;
+
+    top:20px;
+    right:20px;
+
+    background:#00ff88;
+
+    color:black;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    display:none;
+
+    font-weight:bold;
+}
+
+.timer{
+
+    text-align:center;
+
+    font-size:2rem;
+
+    margin-top:15px;
+
+    color:#00e5ff;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="notification" id="notification"></div>
+
+<div class="room-container">
+
+<div class="video-section">
+
+<h2>NRI Virtual Study Room</h2>
+
+<p>
+Room:
+<span id="roomDisplay"></span>
+</p>
+
+<div class="video-grid">
+
+<div>
+
+<video
+id="myVideo"
+autoplay
+muted
+playsinline>
+</video>
+
+</div>
+
+</div>
+
+<div class="controls">
+
+<button onclick="toggleMic()">
+🎤 Mic
+</button>
+
+<button onclick="toggleCamera()">
+📷 Camera
+</button>
+
+<button onclick="shareScreen()">
+🖥 Share Screen
+</button>
+
+<button onclick="leaveRoom()">
+🚪 Leave Room
+</button>
+
+</div>
+
+</div>
+
+<div class="side-panel">
+
+<h3>Participants</h3>
+
+<div id="participants">
+
+<div class="participant">
+🟢 You
+</div>
+
+</div>
+
+<hr>
+
+<h3>Chat</h3>
+
+<div
+class="chat-box"
+id="chatBox">
+</div>
+
+<input
+type="text"
+id="message"
+placeholder="Type message">
+
+<button onclick="sendMessage()">
+Send
+</button>
+
+<hr>
+
+<h3>Shared Notes</h3>
+
+<textarea
+placeholder="Write notes here...">
+</textarea>
+
+<hr>
+
+<h3>Pomodoro Timer</h3>
+
+<div
+class="timer"
+id="timer">
+
+25:00
+
+</div>
+
+<button onclick="startTimer()">
+Start
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+document.getElementById(
+"roomDisplay"
+).innerText =
+localStorage.getItem("roomId") ||
+"Study Room";
+
+let stream;
+
+async function startCamera(){
+
+try{
+
+stream =
+await navigator.mediaDevices.getUserMedia({
+
+video:true,
+audio:true
+
+});
+
+document.getElementById(
+"myVideo"
+).srcObject = stream;
+
+}
+catch(err){
+
+alert(
+"Allow Camera and Microphone"
+);
+
+}
+
+}
+
+startCamera();
+
+function toggleMic(){
+
+if(!stream) return;
+
+const track =
+stream.getAudioTracks()[0];
+
+track.enabled =
+!track.enabled;
+
+}
+
+function toggleCamera(){
+
+if(!stream) return;
+
+const track =
+stream.getVideoTracks()[0];
+
+track.enabled =
+!track.enabled;
+
+}
+
+async function shareScreen(){
+
+try{
+
+await navigator
+.mediaDevices
+.getDisplayMedia({
+
+video:true
+
+});
+
+showNotification(
+"Screen Sharing Started"
+);
+
+}
+catch(err){
+
+console.log(err);
+
+}
+
+}
+
+function leaveRoom(){
+
+window.location.href =
+"dashboard.html";
+
+}
+
+function sendMessage(){
+
+const msg =
+document.getElementById(
+"message"
+).value;
+
+if(msg==="") return;
+
+const chat =
+document.getElementById(
+"chatBox"
+);
+
+chat.innerHTML +=
+"<p><b>You:</b> "
++ msg +
+"</p>";
+
+document.getElementById(
+"message"
+).value = "";
+
+}
+
+function showNotification(text){
+
+const box =
+document.getElementById(
+"notification"
+);
+
+box.innerText =
+text;
+
+box.style.display =
+"block";
+
+setTimeout(()=>{
+
+box.style.display =
+"none";
+
+},3000);
+
+}
+
+showNotification(
+"Welcome to the Study Room"
+);
+
+let seconds =
+1500;
+
+function startTimer(){
+
+setInterval(()=>{
+
+if(seconds>0){
+
+seconds--;
+
+let mins =
+Math.floor(seconds/60);
+
+let secs =
+seconds%60;
+
+document.getElementById(
+"timer"
+).innerText =
+String(mins)
+.padStart(2,"0")
++
+":"
++
+String(secs)
+.padStart(2,"0");
+
+}
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>

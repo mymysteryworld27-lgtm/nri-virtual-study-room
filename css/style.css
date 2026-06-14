@@ -1,0 +1,131 @@
+/* Global */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:#050b18;
+    color:white;
+}
+
+/* Hero Section */
+
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    background:radial-gradient(
+        circle at top,
+        #143d8f,
+        #081224 40%,
+        #050b18 90%
+    );
+}
+
+.hero h1{
+    font-size:5rem;
+    font-weight:800;
+
+    background:linear-gradient(
+        90deg,
+        #00e5ff,
+        #00ffcc,
+        #6ea8ff
+    );
+
+    -webkit-backclip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    font-size:1.4rem;
+    color:#d7e6ff;
+    margin-top:15px;
+}
+
+/* Buttons */
+
+button,
+.btn{
+    background:#00e5ff;
+    color:black;
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+button:hover,
+.btn:hover{
+    background:#00c8e0;
+}
+
+/* Cards */
+
+.card{
+    background:#13294d;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,.4);
+}
+
+/* Inputs */
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+    outline:none;
+}
+
+/* Dashboard */
+
+.dashboard{
+    padding:30px;
+}
+
+.dashboard-links{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+/* Room */
+
+.video-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+    gap:15px;
+}
+
+.video-tile{
+    background:#13294d;
+    height:220px;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:20px;
+}

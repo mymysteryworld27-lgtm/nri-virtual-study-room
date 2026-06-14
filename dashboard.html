@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NRI Virtual Study Room Dashboard</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:#050b18;
+    color:white;
+}
+
+.dashboard{
+    padding:30px;
+}
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.logo{
+    font-size:2rem;
+    font-weight:bold;
+    color:#00e5ff;
+}
+
+.user{
+    color:#d7e6ff;
+}
+
+.actions{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+.btn{
+    background:#00e5ff;
+    color:black;
+    text-decoration:none;
+    padding:14px 22px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#00c8e0;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#13294d;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.4);
+}
+
+.card h3{
+    color:#00e5ff;
+    margin-bottom:15px;
+}
+
+.feature{
+    padding:8px 0;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.room-name{
+    color:#00ff88;
+    font-size:1.2rem;
+}
+
+.logout-btn{
+    background:#ff4d4d;
+    color:white;
+}
+
+.logout-btn:hover{
+    background:#ff3333;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <div class="navbar">
+
+        <div class="logo">
+            NRI Virtual Study Room
+        </div>
+
+        <div class="user">
+            Welcome,
+            <span id="userEmail"></span>
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <a href="create-room.html" class="btn">
+            Create Room
+        </a>
+
+        <a href="join-room.html" class="btn">
+            Join Room
+        </a>
+
+        <a href="#" class="btn logout-btn" onclick="logout()">
+            Logout
+        </a>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+
+            <h3>📅 Current Room</h3>
+
+            <p class="room-name" id="currentRoom">
+                No Room Created Yet
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🚀 Available Features</h3>
+
+            <div class="feature">🎥 Video Meeting</div>
+            <div class="feature">🎤 Audio Discussion</div>
+            <div class="feature">💬 Group Chat</div>
+            <div class="feature">📺 Screen Sharing</div>
+            <div class="feature">📝 Shared Notes</div>
+            <div class="feature">📂 File Sharing</div>
+            <div class="feature">⏱ Pomodoro Timer</div>
+            <div class="feature">📋 Task Manager</div>
+            <div class="feature">📖 Whiteboard</div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>📚 Recent Activity</h3>
+
+            <p id="recentActivity">
+                No activity yet
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>👥 Study Room</h3>
+
+            <p>
+                Create a room and invite unlimited students.
+            </p>
+
+            <p>
+                Students can join using Room ID and Password.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.getElementById(
+"userEmail"
+).innerText =
+localStorage.getItem("email")
+|| "Student";
+
+document.getElementById(
+"currentRoom"
+).innerText =
+localStorage.getItem("roomName")
+|| "No Room Created Yet";
+
+document.getElementById(
+"recentActivity"
+).innerText =
+localStorage.getItem("recentActivity")
+|| "No activity yet";
+
+function logout(){
+
+    localStorage.clear();
+
+    window.location.href =
+    "login.html";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Join Room</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+.container{
+    max-width:500px;
+    margin:50px auto;
+}
+
+.card{
+    background:#13294d;
+    padding:30px;
+    border-radius:15px;
+    color:white;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#00e5ff;
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Join Study Room</h2>
+
+        <input
+        type="text"
+        id="roomId"
+        placeholder="Enter Room ID">
+
+        <input
+        type="password"
+        id="roomPassword"
+        placeholder="Enter Room Password">
+
+        <button onclick="joinRoom()">
+            Join Room
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+function joinRoom(){
+
+    const enteredRoomId =
+    document.getElementById("roomId").value;
+
+    const enteredPassword =
+    document.getElementById("roomPassword").value;
+
+    const savedRoomId =
+    localStorage.getItem("roomId");
+
+    const savedPassword =
+    localStorage.getItem("roomPassword");
+
+    if(
+        enteredRoomId === savedRoomId &&
+        enteredPassword === savedPassword
+    ){
+
+        alert("Joining Room...");
+
+        window.location.href =
+        "room.html";
+
+    }
+    else{
+
+        alert(
+            "Invalid Room ID or Password"
+        );
+
+    }
+}
+
+</script>
+
+</body>
+</html>

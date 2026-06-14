@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Room</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+.container{
+    max-width:500px;
+    margin:50px auto;
+}
+
+.card{
+    background:#13294d;
+    padding:30px;
+    border-radius:15px;
+    color:white;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#00e5ff;
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Create Study Room</h2>
+
+        <input
+        type="text"
+        id="roomName"
+        placeholder="Room Name">
+
+        <input
+        type="text"
+        id="roomId"
+        placeholder="Room ID">
+
+        <input
+        type="password"
+        id="roomPassword"
+        placeholder="Room Password">
+
+        <button onclick="createRoom()">
+            Create Room
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+function createRoom(){
+
+    const roomName =
+    document.getElementById("roomName").value;
+
+    const roomId =
+    document.getElementById("roomId").value;
+
+    const roomPassword =
+    document.getElementById("roomPassword").value;
+
+    if(
+        roomName === "" ||
+        roomId === "" ||
+        roomPassword === ""
+    ){
+
+        alert(
+            "Please fill all fields"
+        );
+
+        return;
+    }
+
+    localStorage.setItem(
+        "roomName",
+        roomName
+    );
+
+    localStorage.setItem(
+        "roomId",
+        roomId
+    );
+
+    localStorage.setItem(
+        "roomPassword",
+        roomPassword
+    );
+
+    alert(
+        "Room Created Successfully"
+    );
+
+    window.location.href =
+    "room.html";
+}
+
+</script>
+
+</body>
+</html>
