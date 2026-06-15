@@ -1,228 +1,127 @@
-/* =========================
-   Global Styles
-========================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
 body{
+    margin:0;
     font-family:'Segoe UI',sans-serif;
-    background:#050b18;
-    color:white;
-    min-height:100vh;
+    background:#030712;
+    overflow-x:hidden;
 }
 
-/* =========================
-   Hero Section
-========================= */
+/* HERO SECTION */
 
 .hero{
     height:100vh;
+
     display:flex;
+    flex-direction:column;
+
     justify-content:center;
     align-items:center;
+
     text-align:center;
 
-    background:radial-gradient(
-        circle at top,
-        #143d8f,
-        #081224 40%,
-        #050b18 90%
-    );
+    background:
+    radial-gradient(circle at top,
+    #1e40af 0%,
+    #081224 45%,
+    #030712 100%);
 }
 
-.hero div{
-
-    width:80%;
-    max-width:1000px;
-
-    padding:50px;
-
-    background:linear-gradient(
-        90deg,
-        #1ecbe1,
-        #20d6c5,
-        #6ea8f0
-    );
-
-    border-radius:20px;
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,.4);
-}
+/* TITLE */
 
 .hero h1{
 
-    font-size:4rem;
-    font-weight:800;
+    font-size:6rem;
+    font-weight:900;
 
-    color:white;
+    background:
+    linear-gradient(
+        90deg,
+        #00e5ff,
+        #00ff88,
+        #7c4dff,
+        #00e5ff
+    );
 
-    margin-bottom:20px;
+    background-size:300% 300%;
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    animation:gradientMove 6s ease infinite;
 
     text-shadow:
-    0 0 10px rgba(255,255,255,.3),
-    0 0 20px rgba(255,255,255,.2);
+    0 0 20px rgba(0,229,255,.3),
+    0 0 40px rgba(0,229,255,.2);
 }
+
+/* TAGLINE */
 
 .hero p{
 
-    font-size:1.4rem;
-    color:white;
+    font-size:1.5rem;
 
-    margin-bottom:25px;
+    color:#dbeafe;
+
+    max-width:700px;
+
+    margin-top:20px;
+
+    line-height:1.8;
 }
 
-/* =========================
-   Buttons
-========================= */
+/* LOGIN BUTTON */
 
-button,
-.btn{
+.hero .btn{
 
-    background:#00e5ff;
-    color:black;
+    margin-top:30px;
+
+    padding:15px 35px;
 
     border:none;
 
-    padding:12px 24px;
+    border-radius:50px;
 
-    border-radius:10px;
-
-    cursor:pointer;
+    font-size:1.1rem;
 
     font-weight:bold;
 
+    color:white;
+
     text-decoration:none;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00e5ff,
+        #2563eb
+    );
+
+    box-shadow:
+    0 0 25px rgba(0,229,255,.5);
 
     transition:.3s;
 }
 
-button:hover,
-.btn:hover{
+.hero .btn:hover{
 
-    background:#00c8e0;
-
-    transform:translateY(-2px);
-}
-
-/* =========================
-   Cards
-========================= */
-
-.card{
-
-    background:#13294d;
-
-    padding:25px;
-
-    border-radius:15px;
+    transform:translateY(-4px);
 
     box-shadow:
-    0 10px 25px rgba(0,0,0,.4);
+    0 0 35px rgba(0,229,255,.8);
 }
 
-/* =========================
-   Inputs
-========================= */
+/* ANIMATION */
 
-input,
-textarea{
+@keyframes gradientMove{
 
-    width:100%;
-
-    padding:12px;
-
-    margin:10px 0;
-
-    border:none;
-
-    border-radius:10px;
-
-    outline:none;
-}
-
-/* =========================
-   Dashboard
-========================= */
-
-.dashboard{
-
-    padding:30px;
-}
-
-.dashboard-links{
-
-    display:flex;
-
-    gap:15px;
-
-    flex-wrap:wrap;
-
-    margin-top:20px;
-}
-
-/* =========================
-   Room
-========================= */
-
-.video-grid{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(250px,1fr));
-
-    gap:15px;
-}
-
-.video-tile{
-
-    background:#13294d;
-
-    height:220px;
-
-    border-radius:15px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-}
-
-.controls{
-
-    display:flex;
-
-    gap:10px;
-
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-    margin-top:20px;
-}
-
-/* =========================
-   Responsive
-========================= */
-
-@media(max-width:768px){
-
-    .hero h1{
-        font-size:2.5rem;
+    0%{
+        background-position:0% 50%;
     }
 
-    .hero p{
-        font-size:1rem;
+    50%{
+        background-position:100% 50%;
     }
 
-    .hero div{
-        width:90%;
-        padding:30px;
+    100%{
+        background-position:0% 50%;
     }
 }

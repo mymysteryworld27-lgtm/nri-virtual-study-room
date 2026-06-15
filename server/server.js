@@ -1,37 +1,67 @@
 const express = require("express");
 const http = require("http");
-const path = require("path");
 const { Server } = require("socket.io");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
+
 const io = new Server(server);
 
 app.use(express.static(path.join(__dirname, "..")));
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "index.html"));
-});
-
-const PORT = process.env.PORT || 3000;
+const rooms = {};
 
 io.on("connection", (socket) => {
+
     console.log("User Connected");
 
-    socket.on("join-room", (roomId) => {
+    socket.on("join-room", ({ roomId, userName }) => {
+
         socket.join(roomId);
 
-        socket.to(roomId).emit(
-            "message",
-            "A new participant joined the room"
+        if (!rooms[roomId]) {
+            rooms[roomId] = [];
+        }
+
+        rooms[roomId].push(userName);
+
+        io.to(roomId).emit(
+            "participant-list",
+            rooms[roomId]
         );
+
+        io.to(roomId).emit(
+            "notification",
+            `${userName} joined the room`
+        );
+
+        socket.on("disconnect", () => {
+
+            if (rooms[roomId]) {
+
+                rooms[roomId] =
+                rooms[roomId].filter(
+                    user => user !== userName
+                );
+
+                io.to(roomId).emit(
+                    "participant-list",
+                    rooms[roomId]
+                );
+
+                io.to(roomId).emit(
+                    "notification",
+                    `${userName} left the room`
+                );
+            }
+        });
+
     });
 
-    socket.on("disconnect", () => {
-        console.log("User Disconnected");
-    });
 });
 
-server.listen(PORT, () => {
-    console.log(`Server Running on Port ${PORT}`);
-});
+server.listen(3000, () => {
+
+    console.log(
+        "Server running on http://

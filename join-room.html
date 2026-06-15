@@ -6,8 +6,8 @@
 
 <title>Join Room</title>
 
-  <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+
 <style>
 .container{
     max-width:500px;
@@ -71,24 +71,39 @@ button{
 
 function joinRoom(){
 
-    const roomId =
+    const enteredRoomId =
     document.getElementById("roomId").value;
 
-    const roomPassword =
+    const enteredPassword =
     document.getElementById("roomPassword").value;
 
-    if(roomId === "" || roomPassword === ""){
-        alert("Please enter Room ID and Password");
-        return;
+    const savedRoomId =
+    localStorage.getItem("roomId");
+
+    const savedPassword =
+    localStorage.getItem("roomPassword");
+
+    if(
+        enteredRoomId === savedRoomId &&
+        enteredPassword === savedPassword
+    ){
+
+        alert("Joining Room...");
+
+        window.location.href =
+        "room.html";
+
     }
+    else{
 
-    localStorage.setItem("roomId", roomId);
+        alert(
+            "Invalid Room ID or Password"
+        );
 
-    alert("Joining Room...");
-
-    window.location.href = "room.html";
+    }
 }
 
 </script>
+
 </body>
 </html>

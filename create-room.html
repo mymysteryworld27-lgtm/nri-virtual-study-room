@@ -6,8 +6,8 @@
 
 <title>Create Room</title>
 
- <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+
 <style>
 .container{
     max-width:500px;
@@ -90,19 +90,38 @@ function createRoom(){
         roomId === "" ||
         roomPassword === ""
     ){
-        alert("Please fill all fields");
+
+        alert(
+            "Please fill all fields"
+        );
+
         return;
     }
 
-    localStorage.setItem("roomName", roomName);
-    localStorage.setItem("roomId", roomId);
-    localStorage.setItem("roomPassword", roomPassword);
+    localStorage.setItem(
+        "roomName",
+        roomName
+    );
 
-    alert("Room Created Successfully");
+    localStorage.setItem(
+        "roomId",
+        roomId
+    );
 
-    window.location.href = "room.html";
+    localStorage.setItem(
+        "roomPassword",
+        roomPassword
+    );
+
+    alert(
+        "Room Created Successfully"
+    );
+
+    window.location.href =
+    "room.html";
 }
 
 </script>
+
 </body>
 </html>
